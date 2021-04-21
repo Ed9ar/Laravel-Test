@@ -5,23 +5,22 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Coin;
 
-
-
 class ListCoins extends Command
 {
+    //php artisan make:command NombreDelComando
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'laravel:coins:list {--name=all}';
+    protected $signature = 'hello-world:coins:list {--name=all}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'List coins on the system';
+    protected $description = 'List the coins on the system';
 
     /**
      * Create a new command instance.
@@ -41,14 +40,14 @@ class ListCoins extends Command
     public function handle()
     {
         $name = $this->option('name');
-
-        if($name !== 'all'){
-            $coins = Coin::where('short_name', $name) ->get();
-        }else{
+        $coins = null;
+        if($name !== 'all') {
+            $coins = Coin::where('name', $name)->get();
+        } else {
             $coins = Coin::all();
         }
-        $this -> info($coins);
 
+        $this->info($coins);
         return 0;
     }
 }

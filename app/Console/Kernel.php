@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('laravel:coins:list')->hourly();
+        $schedule->command('hello-world:coins:list')
+            ->hourly();
     }
 
     /**

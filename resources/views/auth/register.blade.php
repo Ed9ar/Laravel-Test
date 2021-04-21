@@ -1,42 +1,34 @@
+@extends('layouts.main')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User</title>
-</head>
-<body>
-    <form action="{{route('auth.do-register')}}" method="POST">
-        @csrf
-        <div>
-            <label for="">Name</label>
-            <input type="text" name='name' id="">
-        </div>
-        <div>
-            <label for="">Email</label>
-            <input type="text" name='email'>
-        </div>
-        <div>
-            <label for="">Password</label>
-            <input type="password" name='password'>
-        </div>
-        <div>
-            <label for="">Confirma Password</label>
-            <input type="password" name='password_confirmation'>
-        </div>
-
-        <input type = 'submit' value = 'Submit'>
-    </form>
+@section('content')
+    <h1>Registro de usuario</h1>
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
-</body>
-</html>
+    <form action="{{ route('auth.do-register') }}" method="POST">
+        @csrf
+        <label>Rol</label>
+        <input type="text" name="rol">
+        <br>
+        <label for="">Nombre</label>
+        <input type="text" name="name" id="">
+        <br>
+        <label for="">Email</label>
+        <input type="text" name="email" id="">
+        <br>
+        <label for="">Password</label>
+        <input type="password" name="password" id="">
+        <br>
+        <label for="">Confirmación de password</label>
+        <input type="password" name="password_confirmation" id="">
+        <br>
+        <input type="submit" value="Registrarse">
+    </form>
+    <a href="{{ route('auth.login') }}">Login</a>
+@endsection

@@ -13,28 +13,21 @@ class CoinsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+    public function index()
+    {
+        $coins = Coin::all();
+        return view('coins.index', ['coins' => $coins]);
+    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        $coins = Coin::all();
-        
-        return view('coins.index', ['coins' => $coins]);
-        //return view('coins.create');
-    }
-
     public function create()
     {
-        //
         return view('coins.create');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -44,12 +37,11 @@ class CoinsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    
         $arr = $request->input();
         $coin = new Coin();
         $coin->short_name = $arr['short_name'];
-        $coin -> save();
+        $coin->name = $arr['name'];
+        $coin->save();
 
         CoinCalculator::dispatch();
 
@@ -62,9 +54,9 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Coin $coin)
     {
-        //
+        return view('coins.show', ['coin' => $coin]);
     }
 
     /**
@@ -73,10 +65,8 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Coin $coin)
     {
-        //
-        $coin = Coin::find($id);
         return view('coins.edit', ['coin' => $coin]);
     }
 
@@ -87,13 +77,12 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Coin $coin)
     {
-    
         $arr = $request->input();
-        $coin = Coin::find($id);
         $coin->short_name = $arr['short_name'];
-        $coin -> save();
+        $coin->name = $arr['name'];
+        $coin->save();
         return redirect()->route('coins.index');
     }
 
@@ -103,12 +92,16 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Coin $coin)
     {
-        //
-
-        $coin = Coin::find($id);
         $coin->delete();
         return redirect()->route('coins.index');
     }
+    public function dashboard() {
+        return view('usuarios.dashboard');
+    }
+    public function listaUsuarios() {
+        return view('usuarios.lista-usuarios');
+    }
+
 }

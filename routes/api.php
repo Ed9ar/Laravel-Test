@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('coins', 'Api\CoinsController@index') -> name('coins.index');
+Route::get('coins', 'Api\CoinsController@index')->name('coins.index');

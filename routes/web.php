@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CoinsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,31 +15,33 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //return view('welcome');
-    return 'Alejandro';
-});
+    return view('welcome');
+})->name('homepage');
 
-Route::get('/clase', function(){
+Route::get('/clase', function () {
     return view('mi-clase');
 });
 
+// Path de la ruta, 'NombreDelController@FunciónDentroDelController'
 Route::get('/prueba-controller', 'PruebaController@index');
 
 Route::resource('coins', 'CoinsController');
 
 Route::get('register', 'AuthController@register')
-    ->middleware(['validate_hour'])
     ->name('auth.register');
-    
 Route::post('register', 'AuthController@doRegister')
-    ->middleware(['validate_hour'])
     ->name('auth.do-register');
-
 Route::get('login', 'AuthController@login')
-    ->middleware(['validate_hour'])
     ->name('auth.login');
 Route::post('login', 'AuthController@doLogin')
-    ->middleware(['validate_hour'])
     ->name('auth.do-login');
-
-Route::any('logout', 'AuthController@logout')->name('auth.logout');
+Route::any('logout', 'AuthController@logout')
+    ->name('auth.logout');
+Route::any('dashboard', 'CoinsController@dashboard')
+    ->name('dashboard')
+    ->middleware(['validate_user:Usuario-Admin-Super']);
+Route::any('lista-usuarios', 'AuthController@show')
+    ->middleware(['validate_user:Admin-Super'])
+    ->name('auth.show');
+Route::any('user.destroy/{id}', 'AuthController@destroy')
+    ->name('auth.destroy');

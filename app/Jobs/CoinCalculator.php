@@ -30,6 +30,6 @@ class CoinCalculator implements ShouldQueue
      */
     public function handle()
     {
-        \Log::info("Coin calculator executed");
+        \Log::info("Coin Calculator executed");
     }
 }
